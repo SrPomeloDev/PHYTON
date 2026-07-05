@@ -1,70 +1,133 @@
 ==================================================================
-RESPUESTAS A LAS 10 PREGUNTAS DE VALIDACION
-Dashboard Comercial Andina S.A.
-Fuente: bbdd_prueba.xlsx - 9,804 ventas confirmadas (de 10,000)
-Fecha: 2026-07-04
+RESPUESTAS DE VALIDACION — 10 PREGUNTAS DE NEGOCIO
+Comercial Andina S.A. — Dashboard Analitico
 ==================================================================
 
-  P1. Venta Neta total:              $2,722,974.24
-  P2. Margen Bruto total:            $  598,627.79
-  P3. Margen %% general:                    21.98%
-
-  P4. Canal con mayor Venta Neta:    Distribuidor    $1,225,314.47
-      - Distribuidor                                 $1,225,314.47
-      - Corporativo                                  $  674,106.31
-      - Tienda Fisica                                $  600,946.81
-      - E-commerce                                   $  222,606.65
-
-  P5. Categoria con mayor Margen Bruto:  Mascotas    $  132,635.44
-      - Mascotas                                     $  132,635.44
-      - Hogar                                        $  115,080.31
-      - Cuidado Personal                             $   68,595.22
-      - Farmacia OTC                                 $   66,573.54
-      - Bebidas                                      $   59,193.13
-      - Snacks                                       $   56,527.48
-      - Alimentos                                    $   50,186.36
-      - Limpieza                                     $   49,836.33
-
-  P6. Regional con mayor cumplimiento:
-      - Oriente        98.94%  ($844,073.75 / $855,374.31)
-      - Occidente      98.19%  ($696,281.33 / $709,091.46)
-      - Sur            96.69%  ($499,253.98 / $516,327.14)
-      - Valles         96.22%  ($683,365.18 / $710,174.57)
-
-  P7. Ejecutivo con mayor Venta Neta: Daniel Quiroga  $221,996.86
-      - Daniel Quiroga                                 $221,996.86
-      - Paola Suarez                                   $209,863.78
-      - Maria Antelo                                   $199,343.60
-      - Lucia Vargas                                   $191,729.09
-      - Jorge Mercado                                  $186,186.46
-
-  P8. Producto con menor Margen %% (ponderado por venta):
-      1. Botiquin NaturaMax 117           5.02%
-      2. Alimento Gato Altiva 099         5.58%
-      3. Fideos Andina 032                6.83%
-      4. Aguas BolMarket 002              7.64%
-      5. Papel NaturaMax 052              7.79%
-
-  P9. Cliente con mayor compra acumulada:
-      1. Cliente Empresa 0515          $14,848.67
-      2. Cliente Empresa 0089          $12,504.64
-      3. Cliente Persona 0052          $12,241.82
-      4. Cliente Empresa 0063          $12,170.88
-      5. Cliente Persona 0175          $12,025.02
-
-  P10. Transacciones con descuento > 20%%:       1,213
+Periodo analizado:   Enero 2023 — Junio 2024 (18 meses)
+Transacciones:      9,804 confirmadas (de 10,000 totales)
+Productos unicos:   120 (homologados)
+Clientes activos:   600
+Moneda:             Bolivianos (Bs)
 
 ==================================================================
-METODO DE CALCULO
+RESPUESTAS
 ==================================================================
-  - Filtro: solo Estado_Venta = Confirmada (9,804 de 10,000)
-  - Homologacion: Codigo_Producto -> Codigo_Producto_Homologado
-    (0 filas excluidas por falta de homologacion en este dataset)
-  - Metricas derivadas (Venta_Bruta, Venta_Neta, Margen_Bruto,
-    Margen_Pct, Costo_Total) se calculan en clean_ventas() del ETL
-  - KeyMeta = Anio|Mes|Canal|Regional para cruce con metas
-  - Margen %% por producto: calculado como suma(Margen_Bruto) /
-    suma(Venta_Neta) por producto (ponderado por venta), no como
-    promedio simple de Margen_Pct por fila
-  - Ejecutar validacion: py -m utils.verify_data
+
+P1. Venta Neta total
+    Bs 2,722,974.24
+
+P2. Margen Bruto total
+    Bs 598,627.79
+
+P3. Margen % general
+    21.98% (Bs 598,627.79 / Bs 2,722,974.24)
+
+P4. Canal con mayor Venta Neta
+    Distribuidor — Bs 1,225,313.76
+
+    Ranking completo:
+    1. Distribuidor    Bs 1,225,313.76   45.0%
+    2. Corporativo     Bs   674,106.31   24.8%
+    3. Tienda Fisica   Bs   600,946.81   22.1%
+    4. E-commerce      Bs   222,606.65    8.2%
+
+P5. Categoria con mayor Margen Bruto
+    Mascotas — Bs 132,635.08
+
+    Ranking completo:
+    1. Mascotas          Bs 132,635.08
+    2. Hogar             Bs 115,080.31
+    3. Cuidado Personal  Bs  68,595.22
+    4. Farmacia OTC      Bs  66,573.54
+    5. Bebidas           Bs  59,193.13
+    6. Snacks            Bs  56,527.48
+    7. Alimentos         Bs  50,186.36
+    8. Limpieza          Bs  49,836.33
+
+P6. Regional con mayor cumplimiento de meta
+    Oriente — 98.94% (Bs 844,073.75 / Bs 855,374.31)
+
+    Ranking completo:
+    1. Oriente    98.94%  Venta: Bs  844,073.75  Meta: Bs 855,374.31
+    2. Occidente  98.19%  Venta: Bs  696,281.33  Meta: Bs 709,091.46
+    3. Sur        96.69%  Venta: Bs  499,253.98  Meta: Bs 516,327.14
+    4. Valles     96.22%  Venta: Bs  683,365.18  Meta: Bs 710,174.57
+
+P7. Ejecutivo con mayor Venta Neta
+    Daniel Quiroga — Bs 221,997.04
+
+    Top 5:
+    1. Daniel Quiroga    Bs 221,997.04
+    2. Paola Suarez      Bs 209,863.78
+    3. Maria Antelo      Bs 199,343.60
+    4. Lucia Vargas      Bs 191,729.09
+    5. Jorge Mercado     Bs 186,186.46
+
+P8. Producto con menor Margen % (ponderado por venta)
+    Botiquin NaturaMax 117 — 5.02%
+
+    Top 5 menor margen:
+    1. Botiquin NaturaMax 117     5.02%
+    2. Alimento Gato Altiva 099   5.58%
+    3. Fideos Andina 032          6.83%
+    4. Aguas BolMarket 002        7.64%
+    5. Papel NaturaMax 052        7.79%
+
+P9. Cliente con mayor compra acumulada
+    Cliente Empresa 0515 — Bs 14,848.67
+
+    Top 5:
+    1. Cliente Empresa 0515    Bs 14,848.67
+    2. Cliente Empresa 0089    Bs 12,504.64
+    3. Cliente Persona 0052    Bs 12,241.82
+    4. Cliente Empresa 0063    Bs 12,170.88
+    5. Cliente Persona 0175    Bs 12,025.02
+
+P10. Transacciones con descuento mayor a 20%
+     1,213 transacciones (12.4% del total confirmado)
+
+==================================================================
+METODOLOGIA DE CALCULO
+==================================================================
+
+Filtro principal:
+  - Solo Estado_Venta = 'Confirmada' (9,804 de 10,000 filas)
+  - Las 196 filas con otros estados fueron excluidas
+
+Homologacion de productos:
+  - Codigo_Producto (Ventas) -> Codigo_Producto_Origen (Homologacion)
+    -> Codigo_Producto_Homologado (Productos)
+  - Filas sin homologacion: 0 (todas las ventas fueron mapeadas)
+
+Campos calculados en ETL (clean_ventas):
+  - Venta_Bruta     = Cantidad * Precio_Unitario
+  - Descuento_Valor = Venta_Bruta * Descuento_Pct
+  - Venta_Neta      = Venta_Bruta - Descuento_Valor
+  - Costo_Total     = Cantidad * Costo_Unitario
+  - Margen_Bruto    = Venta_Neta - Costo_Total
+  - Margen_Pct      = Margen_Bruto / Venta_Neta
+
+Cruce con Metas:
+  - KeyMeta = Año|Mes|Canal|Regional
+  - Cumplimiento = Sum(Venta_Neta) / Sum(Meta_Venta_Neta)
+
+Margen % por producto (P8):
+  - Calculado como: Sum(Margen_Bruto) / Sum(Venta_Neta) por producto
+  - Es margen PONDERADO por venta, NO promedio simple de Margen_Pct por fila
+
+Ticket Promedio general:
+  - Sum(Venta_Neta) / Count(Distinct ID_Transaccion) = Bs 277.83
+
+Verificacion adicional:
+  - Todas las metricas pasan la validacion _assert_confirmada()
+  - Los totales cruzan contra las 15 consultas SQL en sql/queries.sql
+  - Script de verificacion: py -m utils.verify_data
+
+==================================================================
+DASHBOARD
+==================================================================
+
+  URL:          https://phyton.streamlit.app
+  Stack:        Python 3.12+ / Streamlit 1.58 / Pandas / Plotly
+  Repositorio:  https://github.com/SrPomeloDev/PHYTON
 ==================================================================
