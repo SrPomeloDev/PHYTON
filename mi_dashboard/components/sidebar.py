@@ -6,6 +6,7 @@ import streamlit as st
 
 from config.style import COLORS
 from utils.cache import get_cached_dataframe
+from services.asistente_ia import render_chat_ia
 
 
 def _filter_key(name: str) -> str:
@@ -152,11 +153,13 @@ def render_sidebar_nav() -> None:
             ("pages/2_Estrategica.py", "📈", "Vista Estratégica"),
             ("pages/3_Operativa.py", "📋", "Vista Operativa"),
         ]:
-            st.page_link(page, label=f"{icon}  {label}", use_container_width=True)
+            st.page_link(page, label=f"{icon}  {label}", width="stretch")
         st.markdown(
             "<div style='height:1px; background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent); margin: 0.5rem 0 0.8rem 0;'></div>",
             unsafe_allow_html=True,
         )
+
+        render_chat_ia()
 
 
 def render_sidebar() -> dict[str, Any]:

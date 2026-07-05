@@ -1,5 +1,7 @@
 # Informe Técnico — Dashboard Comercial Andina S.A.
 
+> ⚠️ **LEER ANTES DE MODIFICAR** — Ver sección [Configuraciones Críticas](#11-configuraciones-críticas) al final.
+
 ## 1. Stack Tecnológico
 
 | Capa | Tecnología | Versión | Propósito |
@@ -338,3 +340,58 @@ py -m utils.etl
 ```
 
 Requiere `.env` con `SUPABASE_DB_URL` apuntando al pooler de Supabase (puerto 6543, no el 5432 directo). Chunks de 500 filas para evitar timeout del pooler.
+
+---
+
+## 11. Configuraciones Críticas
+
+### 11.1 Navegación del Sidebar
+
+El sidebar tiene navegación **personalizada** con emojis vía `st.page_link()` en `components/sidebar.py:render_sidebar_nav()`.
+Streamlit genera automáticamente una segunda navegación (sin emojis) que se oculta con CSS.
+
+**NO BORRAR esta línea de `config/style.py:inject_css()`:**
+```css
+[data-testid="stSidebarNav"] { display: none !important; }
+```
+Si se elimina, aparecerán **dos menús de navegación** en el sidebar.
+
+### 11.2 F-strings con CSS
+
+Todas las funciones que inyectan CSS usan **f-strings de Python**. Los `{}` de CSS deben escaparse como `{{` `}}`:
+
+```python
+# INCORRECTO — explota con NameError:
+st.markdown(f"""<style>.clase {{ color: red; }}""")
+
+# CORRECTO:
+st.markdown(f"""<style>.clase {{ color: red; }}""")
+```
+
+### 11.3 Asistente IA (Groq)
+
+- **Archivo**: `services/asistente_ia.py`
+- **API Key**: `.streamlit/secrets.toml` → `GROQ_API_KEY = "gsk_..."`
+- **Modelo**: `llama-3.3-70b-versatile` (si se cambia, verificar disponibilidad en console.groq.com)
+- No commitear `secrets.toml` (ya está en `.gitignore`)
+
+### 11.4 Orden del Sidebar
+
+El orden de renderizado en el sidebar es:
+
+1. Marca + navegación con emoji (`render_sidebar_nav`)
+2. Asistente IA (`render_chat_ia` llamada desde `render_sidebar_nav`)
+3. Filtros + copyright (`render_sidebar`)
+
+No intercambiar el orden ni mover `render_chat_ia()` fuera del `with st.sidebar:` de `render_sidebar_nav()`.
+
+### 11.5 Modelo de Groq
+
+Si la API devuelve `model_decommissioned`, actualizar el modelo en `services/asistente_ia.py:consultar_groq()`. Listar modelos disponibles con:
+
+```python
+from groq import Groq
+client = Groq(api_key="gsk_...")
+for m in client.models.list().data:
+    print(m.id)
+```

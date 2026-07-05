@@ -138,6 +138,8 @@ def inject_css() -> str:
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
 
+        [data-testid="stSidebarNav"] {{ display: none !important; }}
+
         /* â”€â”€ Design Tokens â”€â”€ */
         :root {{
             --font: {FONT_FAMILY};
