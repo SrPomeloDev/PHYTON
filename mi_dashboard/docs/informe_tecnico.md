@@ -239,12 +239,26 @@ Todas reciben `df` (DataFrame filtrado de ventas) y validan `_assert_confirmada(
 - **Texto**: `#F8FAFC` (text_primary), `#94A3B8` (text_secondary), `#64748B` (text_muted)
 - **Acento**: `#6366F1` (primary/accent), `#10B981` (success), `#F59E0B` (warning), `#EF4444` (danger)
 - **Secundarios**: `#8B5CF6` (purple), `#06B6D4` (info/cyan), `#F97316` (orange)
-- **Variantes**: * _light para tintes de fondo (blue_light, green_light, red_light, orange_light, purple_light, cyan_light)
+- **Variantes**: *_light para tintes de fondo (blue_light, green_light, red_light, orange_light, purple_light, cyan_light)
 - **Bordes**: `border`, `border_light`
 
-### CSS (660+ líneas)
+### SEGMENT_COLORS
 
-Inyectado via `inject_css()` → `apply_theme()` al inicio de cada página.
+Cada segmento de clientes tiene un color fijo asignado por nombre para el gráfico de dona:
+
+```python
+SEGMENT_COLORS = {
+    "Retail":            "#6366F1",  # Indigo
+    "Cliente Frecuente": "#06B6D4",  # Cyan
+    "Mayorista":         "#10B981",  # Emerald
+    "Corporativo":       "#F59E0B",  # Amber
+    "Nuevo":             "#A855F7",  # Purple
+}
+```
+
+### CSS (~704 líneas)
+
+Inyectado via `inject_css()` → `apply_theme()` al inicio de cada página. Incluye media query responsive para móviles (max-width: 768px) que adapta padding, tamaños de KPI, charts y apila columnas al 100%.
 
 - **KPI Premium**: Glassmorphism, hover lift, glow effect, trend badges
 - **Progress bars**: Animación slide-left, gradientes
@@ -252,11 +266,15 @@ Inyectado via `inject_css()` → `apply_theme()` al inicio de cada página.
 - **Stat chip**: Badge informativo compacto
 - **Animaciones**: fadeInUp, slideInLeft, pulse
 - **Scrollbar personalizada**: Tema oscuro
-- **Selectbox/ Multiselect**: Personalizados vía clase `.stSelectbox`/`.stMultiSelect`
+- **Responsive**: Comportamiento adaptativo para dispositivos móviles
 
 ### Chart Colors (CHART_COLORS)
 
 10 colores para gráficos Plotly: indigo, emerald, amber, rose, cyan, violet, orange, pink, lime, teal.
+
+### Cursor personalizado (solo desktop)
+
+Aura luminosa de 140px que sigue al puntero con suavizado (easing 0.18). Se desactiva automáticamente en dispositivos táctiles (mobile/tablet) para no bloquear eventos touch ni consumir CPU.
 
 ## 10. Verificación de Datos
 
@@ -292,16 +310,28 @@ Inyectado via `inject_css()` → `apply_theme()` al inicio de cada página.
 
 ## 11. Despliegue
 
+### URL del Dashboard
+
+**https://phyton.streamlit.app**
+
+Desplegado en Streamlit Community Cloud. Se actualiza automáticamente con cada push a la rama `main` del repositorio.
+
 ### Local
 
 ```powershell
 .venv\Scripts\activate
-streamlit run app.py
+streamlit run mi_dashboard/app.py
 ```
 
 Sin `.env` con `SUPABASE_DB_URL`, funciona offline cargando `bbdd_prueba.xlsx`.
 
-### Supabase
+### Requisitos de despliegue
+
+- Archivo `runtime.txt` con `3.12` (fija versión de Python)
+- Archivo `requirements.txt` en la raíz del repo con las dependencias
+- Archivo `.streamlit/config.toml` para tema oscuro y navegación
+
+### Supabase (opcional)
 
 ```powershell
 py -m utils.etl
