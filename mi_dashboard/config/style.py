@@ -92,9 +92,6 @@ def apply_theme():
         var win = window.parent;
         var doc = win.document;
         
-        // Skip on touch devices (mobile/tablet) — cursor aura has no effect and wastes CPU
-        if ('ontouchstart' in win || navigator.maxTouchPoints > 0) return;
-        
         if (win.__mouseFollowerRAF) {
             cancelAnimationFrame(win.__mouseFollowerRAF);
             win.__mouseFollowerRAF = null;
@@ -132,7 +129,7 @@ def apply_theme():
         win.__mouseFollowerRAF = requestAnimationFrame(update);
     })();
 </script>
-    """, height=0, width=0)
+    """, height=1, width=1)
 
 def inject_css() -> str:
     c = COLORS
