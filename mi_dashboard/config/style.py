@@ -92,6 +92,9 @@ def apply_theme():
         var win = window.parent;
         var doc = win.document;
         
+        // Skip on touch devices (mobile/tablet) — cursor aura has no effect and wastes CPU
+        if ('ontouchstart' in win || navigator.maxTouchPoints > 0) return;
+        
         if (win.__mouseFollowerRAF) {
             cancelAnimationFrame(win.__mouseFollowerRAF);
             win.__mouseFollowerRAF = null;
@@ -100,10 +103,8 @@ def apply_theme():
         var old = doc.getElementById('mc-aura');
         if (old) old.remove();
         
-        // ── CONFIG ──────────────────────────────────
-        var AURA_SIZE     = 140;   // px (diameter)
-        var FOLLOW_SPEED  = 0.18;  // 0-1: higher = snappier
-        // ────────────────────────────────────────────
+        var AURA_SIZE     = 140;
+        var FOLLOW_SPEED  = 0.18;
         
         var aura = doc.createElement('div');
         aura.id = 'mc-aura';
@@ -693,12 +694,26 @@ def inject_css() -> str:
            â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         @media (max-width: 768px) {{
             .main .block-container {{
-                padding-left: 1rem !important; padding-right: 1rem !important;
+                padding-left: 0.6rem !important; padding-right: 0.6rem !important;
+                padding-top: 0.4rem !important;
             }}
             .progress-row {{
                 flex-direction: column; align-items: stretch; gap: 0.5rem;
             }}
             .progress-detail {{ text-align: left; }}
+            .page-header-title {{ font-size: 1.1rem !important; }}
+            .page-header-subtitle {{ font-size: 0.7rem !important; }}
+            .kpi-premium {{ padding: 0.6rem 0.8rem !important; }}
+            .kpi-value-text {{ font-size: 1.1rem !important; }}
+            .kpi-label-text {{ font-size: 0.6rem !important; }}
+            div[data-testid="stPlotlyChart"] {{ padding: 0.3rem 0.4rem !important; }}
+            .section-title {{ font-size: 0.9rem !important; }}
+            div[data-testid="column"] {{
+                min-width: 100% !important;
+            }}
+            .stButton button {{ font-size: 0.75rem !important; padding: 0.3rem 0.6rem !important; }}
+            .stSelectbox, .stMultiSelect {{ font-size: 0.75rem !important; }}
+            .st-emotion-cache-1wivap2 {{ font-size: 0.75rem !important; }}
         }}
     </style>
     """
