@@ -1,0 +1,70 @@
+==================================================================
+RESPUESTAS A LAS 10 PREGUNTAS DE VALIDACION
+Dashboard Comercial Andina S.A.
+Fuente: bbdd_prueba.xlsx - 9,804 ventas confirmadas (de 10,000)
+Fecha: 2026-07-04
+==================================================================
+
+  P1. Venta Neta total:              $2,722,974.24
+  P2. Margen Bruto total:            $  598,627.79
+  P3. Margen %% general:                    21.98%
+
+  P4. Canal con mayor Venta Neta:    Distribuidor    $1,225,314.47
+      - Distribuidor                                 $1,225,314.47
+      - Corporativo                                  $  674,106.31
+      - Tienda Fisica                                $  600,946.81
+      - E-commerce                                   $  222,606.65
+
+  P5. Categoria con mayor Margen Bruto:  Mascotas    $  132,635.44
+      - Mascotas                                     $  132,635.44
+      - Hogar                                        $  115,080.31
+      - Cuidado Personal                             $   68,595.22
+      - Farmacia OTC                                 $   66,573.54
+      - Bebidas                                      $   59,193.13
+      - Snacks                                       $   56,527.48
+      - Alimentos                                    $   50,186.36
+      - Limpieza                                     $   49,836.33
+
+  P6. Regional con mayor cumplimiento:
+      - Oriente        98.94%  ($844,073.75 / $855,374.31)
+      - Occidente      98.19%  ($696,281.33 / $709,091.46)
+      - Sur            96.69%  ($499,253.98 / $516,327.14)
+      - Valles         96.22%  ($683,365.18 / $710,174.57)
+
+  P7. Ejecutivo con mayor Venta Neta: Daniel Quiroga  $221,996.86
+      - Daniel Quiroga                                 $221,996.86
+      - Paola Suarez                                   $209,863.78
+      - Maria Antelo                                   $199,343.60
+      - Lucia Vargas                                   $191,729.09
+      - Jorge Mercado                                  $186,186.46
+
+  P8. Producto con menor Margen %% (ponderado por venta):
+      1. Botiquin NaturaMax 117           5.02%
+      2. Alimento Gato Altiva 099         5.58%
+      3. Fideos Andina 032                6.83%
+      4. Aguas BolMarket 002              7.64%
+      5. Papel NaturaMax 052              7.79%
+
+  P9. Cliente con mayor compra acumulada:
+      1. Cliente Empresa 0515          $14,848.67
+      2. Cliente Empresa 0089          $12,504.64
+      3. Cliente Persona 0052          $12,241.82
+      4. Cliente Empresa 0063          $12,170.88
+      5. Cliente Persona 0175          $12,025.02
+
+  P10. Transacciones con descuento > 20%%:       1,213
+
+==================================================================
+METODO DE CALCULO
+==================================================================
+  - Filtro: solo Estado_Venta = Confirmada (9,804 de 10,000)
+  - Homologacion: Codigo_Producto -> Codigo_Producto_Homologado
+    (0 filas excluidas por falta de homologacion en este dataset)
+  - Metricas derivadas (Venta_Bruta, Venta_Neta, Margen_Bruto,
+    Margen_Pct, Costo_Total) se calculan en clean_ventas() del ETL
+  - KeyMeta = Anio|Mes|Canal|Regional para cruce con metas
+  - Margen %% por producto: calculado como suma(Margen_Bruto) /
+    suma(Venta_Neta) por producto (ponderado por venta), no como
+    promedio simple de Margen_Pct por fila
+  - Ejecutar validacion: py -m utils.verify_data
+==================================================================
